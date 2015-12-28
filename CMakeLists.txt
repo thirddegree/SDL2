@@ -878,6 +878,7 @@ elseif(WINDOWS)
 
   # Libraries for Win32 native and MinGW
   list(APPEND EXTRA_LIBS user32 gdi32 winmm imm32 ole32 oleaut32 version uuid)
+  
 
   # TODO: in configure.in the check for timers is set on
   # cygwin | mingw32* - does this include mingw32CE?
@@ -1255,6 +1256,9 @@ if(SDL_SHARED)
   endif()
  set(_INSTALL_LIBS "SDL2" ${_INSTALL_LIBS})
  target_link_libraries(SDL2 ${EXTRA_LIBS} ${EXTRA_LDFLAGS})
+ if(MSVC_VERSION GREATER 1800)
+   target_link_libraries(SDL2 debug vcruntimed ucrtd)
+ endif()
 endif()
 
 if(SDL_STATIC)
